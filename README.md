@@ -2,6 +2,7 @@
 
 ## Directory Structure
 
+```
 ├── README.md
 ├── LICENSE
 ├── python: Code for generating resource images
@@ -12,5 +13,6 @@
     │   └── instrument appearance images
     ├── preview.png: instrument thumbnail
     └── logic.lua: instrument behavior
+```
 
 ## Developing
