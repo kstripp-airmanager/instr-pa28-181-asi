@@ -64,7 +64,9 @@ plt.savefig("fit_function.png")
 #################################################
 # Generate the gauge face
 
-fix, ax = plt.subplots()
+# https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
+px = 1/plt.rcParams['figure.dpi']
+fix, ax = plt.subplots(figsize=(560*px, 560*px))
 
 # Create overall geometry
 x = (FACE_DIAM/2-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
