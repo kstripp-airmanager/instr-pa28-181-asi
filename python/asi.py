@@ -43,7 +43,7 @@ V_fe = 102  # Max flap extension speed.  Top of white arc
 V_no  = 125 # Masimum structural speed.  Green / yellow transition
 V_ne = 154  # Never exceed speed.  Red line / top of yello arc
 
-V_ARC_WIDTH = 10
+V_ARC_WIDTH = 9
 
 # Known speed angles
 # These are the best estimates from skewed photos
@@ -133,18 +133,27 @@ for idx, angle in enumerate(angles):
     ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
 
 # Draw speed range arcs
-theta1 = v_angle(V_fe)
+theta1 = v_angle(TAS_MIN_IAS)
 theta2 = v_angle(V_s0)
 ax.add_patch(Wedge((0,0),(FACE_WIDTH/2-V_ARC_WIDTH), theta1, theta2, width=V_ARC_WIDTH, color=WHITE_ARC_COLOR))
 
-theta1 = v_angle(V_no)
+theta1 = v_angle(V_fe)
+theta2 = v_angle(TAS_MIN_IAS)
+ax.add_patch(Wedge((0,0),TAS_WINDOW_INNER-V_ARC_WIDTH, theta1, theta2, width=V_ARC_WIDTH, color=WHITE_ARC_COLOR))
+
+theta1 = v_angle(TAS_MIN_IAS)
 theta2 = v_angle(V_s)
 ax.add_patch(Wedge((0,0),(FACE_WIDTH/2), theta1, theta2, width=V_ARC_WIDTH, color=GREEN_ARC_COLOR))
+
+theta1 = v_angle(V_no)
+theta2 = v_angle(TAS_MIN_IAS)
+ax.add_patch(Wedge((0,0),TAS_WINDOW_INNER, theta1, theta2, width=V_ARC_WIDTH, color=GREEN_ARC_COLOR))
 
 theta1 = v_angle(V_ne)
 theta2 = v_angle(V_no)
 ax.add_patch(Wedge((0,0),(FACE_WIDTH/2), theta1, theta2, width=V_ARC_WIDTH, color=YELLOW_ARC_COLOR))
 
+# Redline speed
 angle = v_angle(V_ne)
 theta = 2*np.pi * angle/360
 x = (FACE_WIDTH/2) * np.cos(theta)
