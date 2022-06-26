@@ -110,28 +110,6 @@ theta1 = v_angle(TAS_MAX_IAS)
 theta2 = v_angle(TAS_MIN_IAS)
 ax.add_patch(Wedge((0,0),TAS_WINDOW_INNER, theta1, theta2, color=FACE_COLOR))
 
-# Draw ticks
-for idx, angle in enumerate(angles):
-    theta = 2*np.pi * angle/360
-
-    # Widths are the same for all ticks
-    width = MAJ_TICK_WIDTH/2 if idx % 2 == 1 else MIN_TICK_WIDTH/2
-
-    # Height and location varies around TAS window
-    x = (FACE_WIDTH/2) * np.cos(theta)
-    y = (FACE_WIDTH/2) * np.sin(theta)
-    if angle > v_angle(TAS_MIN_IAS):
-        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
-    elif angle >= v_angle(TAS_MAX_IAS):
-        x = (TAS_WINDOW_INNER) * np.cos(theta)
-        y = (TAS_WINDOW_INNER) * np.sin(theta)
-        height = TAS_TICK_HEIGHT
-    else:
-        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
-
-    ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
-    ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
-
 # Draw speed range arcs
 theta1 = v_angle(TAS_MIN_IAS)
 theta2 = v_angle(V_s0)
@@ -162,6 +140,28 @@ width = MIN_TICK_WIDTH/2
 height = np.mean([MIN_TICK_HEIGHT, MAJ_TICK_HEIGHT])
 ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=REDLINE_COLOR))
 ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=REDLINE_COLOR))
+
+# Draw ticks
+for idx, angle in enumerate(angles):
+    theta = 2*np.pi * angle/360
+
+    # Widths are the same for all ticks
+    width = MAJ_TICK_WIDTH/2 if idx % 2 == 1 else MIN_TICK_WIDTH/2
+
+    # Height and location varies around TAS window
+    x = (FACE_WIDTH/2) * np.cos(theta)
+    y = (FACE_WIDTH/2) * np.sin(theta)
+    if angle > v_angle(TAS_MIN_IAS):
+        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
+    elif angle >= v_angle(TAS_MAX_IAS):
+        x = (TAS_WINDOW_INNER) * np.cos(theta)
+        y = (TAS_WINDOW_INNER) * np.sin(theta)
+        height = TAS_TICK_HEIGHT
+    else:
+        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
+
+    ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
+    ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
