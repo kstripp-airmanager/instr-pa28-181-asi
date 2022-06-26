@@ -14,7 +14,7 @@ TAS_WINDOW_INNER = 162 # px, inner radius of TAS window
 
 TEMP_WINDOW_ANGLE = 40 # degrees, symmetric around vertical
 TAS_MIN_IAS = 84 # knots, min IAS covered by TAS window
-TAS_MAX_IAS = 120 # knots, max IAS covered by TAS window
+TAS_MAX_IAS = 125 # knots, max IAS covered by TAS window
 
 # Colors
 FACE_COLOR = '#131512'
@@ -72,6 +72,28 @@ ax.plot(x, y, '.', color=FACE_COLOR)
 ax.axis("Off")
 plt.gca().set_aspect('equal')
 
+# Draw face border
+radius = np.mean([FACE_DIAM/2, WINDOW_OUTER])
+width = FACE_DIAM/2 - WINDOW_OUTER
+ax.add_patch(Circle((0,0), radius=radius, color=FACE_COLOR,
+                   linewidth=width, fill=False))
+
+# Fill in face around windows
+theta1 = v_angle(TAS_MIN_IAS)
+theta2 = -1 * TEMP_WINDOW_ANGLE/2 + 90
+ax.add_patch(Wedge((0,0), FACE_DIAM/2, theta1, theta2, color=FACE_COLOR))
+
+theta1 = 1 * TEMP_WINDOW_ANGLE/2 + 90
+theta2 = v_angle(TAS_MAX_IAS)
+ax.add_patch(Wedge((0,0), FACE_DIAM/2, theta1, theta2, color=FACE_COLOR))
+
+theta1 = -1 * TEMP_WINDOW_ANGLE/2 + 90
+theta2 = 1 * TEMP_WINDOW_ANGLE/2 + 90
+ax.add_patch(Wedge((0,0),TEMP_WINDOW_INNER, theta1, theta2, color=FACE_COLOR))
+
+theta1 = v_angle(TAS_MAX_IAS)
+theta2 = v_angle(TAS_MIN_IAS)
+ax.add_patch(Wedge((0,0),TAS_WINDOW_INNER, theta1, theta2, color=FACE_COLOR))
 
 # Draw ticks
 for idx, angle in enumerate(angles):
