@@ -19,6 +19,10 @@ TAS_MAX_IAS = 125 # knots, max IAS covered by TAS window
 # Colors
 FACE_COLOR = '#131512'
 TICK_COLOR = '#FFFFFF'
+WHITE_ARC_COLOR = '#FFFFFF'
+GREEN_ARC_COLOR = '#008000'
+YELLOW_ARC_COLOR = '#F9C806'
+REDLINE_COLOR = '#FF0000'
 
 # Speed Range
 V_min = 35
@@ -32,6 +36,14 @@ TAS_TICK_HEIGHT = 23
 MIN_TICK_WIDTH = 3
 MIN_TICK_HEIGHT = 30
 
+# V-speeds
+V_s0 = 49   # Stall, landing config.  Bottom of white arc
+V_s = 55    # Stall, clean config.  Bottom of green arc
+V_fe = 102  # Max flap extension speed.  Top of white arc
+V_no  = 125 # Masimum structural speed.  Green / yellow transition
+V_ne = 154  # Never exceed speed.  Red line / top of yello arc
+
+V_ARC_WIDTH = 10
 
 # Known speed angles
 # These are the best estimates from skewed photos
@@ -119,6 +131,28 @@ for idx, angle in enumerate(angles):
 
     ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
     ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
+
+# Draw speed range arcs
+theta1 = v_angle(V_fe)
+theta2 = v_angle(V_s0)
+ax.add_patch(Wedge((0,0),(FACE_WIDTH/2-V_ARC_WIDTH), theta1, theta2, width=V_ARC_WIDTH, color=WHITE_ARC_COLOR))
+
+theta1 = v_angle(V_no)
+theta2 = v_angle(V_s)
+ax.add_patch(Wedge((0,0),(FACE_WIDTH/2), theta1, theta2, width=V_ARC_WIDTH, color=GREEN_ARC_COLOR))
+
+theta1 = v_angle(V_ne)
+theta2 = v_angle(V_no)
+ax.add_patch(Wedge((0,0),(FACE_WIDTH/2), theta1, theta2, width=V_ARC_WIDTH, color=YELLOW_ARC_COLOR))
+
+angle = v_angle(V_ne)
+theta = 2*np.pi * angle/360
+x = (FACE_WIDTH/2) * np.cos(theta)
+y = (FACE_WIDTH/2) * np.sin(theta)
+width = MIN_TICK_WIDTH/2
+height = np.mean([MIN_TICK_HEIGHT, MAJ_TICK_HEIGHT])
+ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=REDLINE_COLOR))
+ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=REDLINE_COLOR))
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
