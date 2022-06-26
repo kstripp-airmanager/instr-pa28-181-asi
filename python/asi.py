@@ -27,6 +27,7 @@ V_max = 170
 # Tick geometry
 MAJ_TICK_WIDTH = 6
 MAJ_TICK_HEIGHT = 60
+TAS_TICK_HEIGHT = 23
 
 MIN_TICK_WIDTH = 3
 MIN_TICK_HEIGHT = 30
@@ -98,11 +99,21 @@ ax.add_patch(Wedge((0,0),TAS_WINDOW_INNER, theta1, theta2, color=FACE_COLOR))
 # Draw ticks
 for idx, angle in enumerate(angles):
     theta = 2*np.pi * angle/360
+
+    # Widths are the same for all ticks
+    width = MAJ_TICK_WIDTH/2 if idx % 2 == 1 else MIN_TICK_WIDTH/2
+
+    # Height and location varies around TAS window
     x = (FACE_WIDTH/2) * np.cos(theta)
     y = (FACE_WIDTH/2) * np.sin(theta)
-
-    width = MAJ_TICK_WIDTH/2 if idx % 2 == 1 else MIN_TICK_WIDTH/2
-    height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
+    if angle > v_angle(TAS_MIN_IAS):
+        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
+    elif angle >= v_angle(TAS_MAX_IAS):
+        x = (TAS_WINDOW_INNER) * np.cos(theta)
+        y = (TAS_WINDOW_INNER) * np.sin(theta)
+        height = TAS_TICK_HEIGHT
+    else:
+        height = MAJ_TICK_HEIGHT if idx % 2 == 1 else MIN_TICK_HEIGHT
 
     ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
     ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
