@@ -44,10 +44,10 @@ ref_speeds = np.array(speeds)
 ref_angles = np.array(angles)
 
 vfit = np.poly1d(np.polyfit(speeds, angles, 3))
-v_angle = lambda v: vfit(v)
+v_angle = lambda v: vfit(v) + 90
 
 speed_ticks = np.arange(V_min, V_max+5, 5)
-angles = v_angle(speed_ticks) + 90
+angles = v_angle(speed_ticks)
 
 # Plot the fit function
 plt.plot(ref_speeds, ref_angles, label="reference")
