@@ -34,6 +34,7 @@ MIN_TICK_HEIGHT = 30
 
 # Known speed angles
 # These are the best estimates from skewed photos
+# Note: Angles are measured clockwise from vertical
 speeds = [0, 40, 70, 105, 140, 170]
 angles = [0, 30, 90, 180, 270, 330]
 
@@ -44,7 +45,7 @@ ref_speeds = np.array(speeds)
 ref_angles = np.array(angles)
 
 vfit = np.poly1d(np.polyfit(speeds, angles, 3))
-v_angle = lambda v: vfit(v) + 90
+v_angle = lambda v: -1 * vfit(v) + 90
 
 speed_ticks = np.arange(V_min, V_max+5, 5)
 angles = v_angle(speed_ticks)
@@ -83,5 +84,6 @@ for idx, angle in enumerate(angles):
 
     ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
     ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
+
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
