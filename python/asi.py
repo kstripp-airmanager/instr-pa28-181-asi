@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Circle, Wedge
+from matplotlib.text import Text
 import numpy as np
 
 # Geometry
@@ -15,6 +16,8 @@ TAS_WINDOW_INNER = 162 # px, inner radius of TAS window
 TEMP_WINDOW_ANGLE = 40 # degrees, symmetric around vertical
 TAS_MIN_IAS = 84 # knots, min IAS covered by TAS window
 TAS_MAX_IAS = 125 # knots, max IAS covered by TAS window
+
+V_LABEL_INSET = 30 # px, inset distance inside tick marks
 
 # Colors
 FACE_COLOR = '#131512'
@@ -44,6 +47,11 @@ V_no  = 125 # Masimum structural speed.  Green / yellow transition
 V_ne = 154  # Never exceed speed.  Red line / top of yello arc
 
 V_ARC_WIDTH = 9
+
+# Speed Labels
+v_labels = [40, 60, 80, 100, 120, 140, 160]
+v_font_large = 20 # pt
+v_font_small = 14 # pt
 
 # Known speed angles
 # These are the best estimates from skewed photos
@@ -162,6 +170,28 @@ for idx, angle in enumerate(angles):
 
     ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
     ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
+
+# Add speed labels
+for idx, speed in enumerate(v_labels):
+    angle = v_angle(speed)
+    theta = 2*np.pi * angle/360
+
+    # Height and location varies around TAS window
+    if angle > v_angle(TAS_MIN_IAS):
+        fontsize = v_font_large
+        radius = FACE_WIDTH/2 - MAJ_TICK_HEIGHT - V_LABEL_INSET
+    elif angle >= v_angle(TAS_MAX_IAS):
+        fontsize = v_font_small
+        radius = TAS_WINDOW_INNER - TAS_TICK_HEIGHT - V_LABEL_INSET
+    else:
+        fontsize = v_font_large
+        radius = FACE_WIDTH/2 - MAJ_TICK_HEIGHT - V_LABEL_INSET
+
+    x = (radius) * np.cos(theta)
+    y = (radius) * np.sin(theta)
+
+    # The DIN 1451 font is close, but the I glyph matches the 1 glyph seen on the actual gauge
+    plt.text(x,y, str(speed), color=TICK_COLOR, ha='center', va='center', size=fontsize)
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
