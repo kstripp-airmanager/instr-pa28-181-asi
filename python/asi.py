@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Circle, Wedge
 from matplotlib.text import Text
+from matplotlib import rcParams
 import numpy as np
 
 # Geometry
@@ -88,12 +89,17 @@ plt.savefig("fit_function.png")
 px = 1/plt.rcParams['figure.dpi']
 fix, ax = plt.subplots(figsize=(560*px, 560*px))
 
-# Create overall geometry
+# Set up general figure properties
 x = (FACE_DIAM/2-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
 y = (FACE_DIAM/2-1) * np.cos(2*np.pi* np.array([0, 90, 180, 270])/360)
 ax.plot(x, y, '.', color=FACE_COLOR)
 ax.axis("Off")
 plt.gca().set_aspect('equal')
+
+rcParams['font.family'] = 'Alte DIN 1451 Mittelschrift'
+
+# The DIN 1451 font is close, but the I glyph matches the 1 glyph seen on the actual gauge
+typeset = lambda s: str(s).replace("1", "I")
 
 # Draw face border
 radius = np.mean([FACE_DIAM/2, WINDOW_OUTER])
@@ -191,7 +197,7 @@ for idx, speed in enumerate(v_labels):
     y = (radius) * np.sin(theta)
 
     # The DIN 1451 font is close, but the I glyph matches the 1 glyph seen on the actual gauge
-    plt.text(x,y, str(speed), color=TICK_COLOR, ha='center', va='center', size=fontsize)
+    plt.text(x,y, typeset(speed), color=TICK_COLOR, ha='center', va='center', size=fontsize)
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
