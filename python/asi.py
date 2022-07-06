@@ -40,6 +40,9 @@ TAS_TICK_HEIGHT = 23
 MIN_TICK_WIDTH = 3
 MIN_TICK_HEIGHT = 30
 
+TEMP_TICK_HEIGHT = 15
+TEMP_TICK_WIDTH = 3
+
 # V-speeds
 V_s0 = 49   # Stall, landing config.  Bottom of white arc
 V_s = 55    # Stall, clean config.  Bottom of green arc
@@ -60,8 +63,19 @@ v_font_small = 14 # pt
 speeds = [0, 40, 70, 105, 140, 170]
 angles = [0, 30, 90, 180, 270, 330]
 
+# Temperature scale
+temp_min = -30
+temp_max = 30
+temp_step = 10
+temp_angle_min = 17
+temp_angle_max = -17
+temp_label_step = 30 # label every 30 degrees
+
+t_font_size = 12
+t_label_inset = 15
+
 #################################################
-# Fit function
+# Fit functions
 
 ref_speeds = np.array(speeds)
 ref_angles = np.array(angles)
@@ -81,6 +95,9 @@ plt.xlabel("Speed")
 plt.ylabel("Indicator angle (\u00B0)")
 
 plt.savefig("fit_function.png")
+
+# Temperature tick fit
+temp_angle = lambda t: temp_angle_max/temp_max * t
 
 #################################################
 # Generate the gauge face
@@ -198,6 +215,32 @@ for idx, speed in enumerate(v_labels):
 
     # The DIN 1451 font is close, but the I glyph matches the 1 glyph seen on the actual gauge
     plt.text(x,y, typeset(speed), color=TICK_COLOR, ha='center', va='center', size=fontsize)
+
+# Draw Temperature ticks
+for temperature in np.arange(temp_min, (temp_max + temp_step), temp_step):
+
+    angle = temp_angle(temperature) + 90
+    theta = 2*np.pi * angle/360
+
+    width = TEMP_TICK_WIDTH/2
+    height = TEMP_TICK_HEIGHT
+
+    x = TEMP_WINDOW_INNER * np.cos(theta)
+    y = TEMP_WINDOW_INNER * np.sin(theta)
+
+    ax.add_patch(Rectangle((x,y),  1 * width, -1 * height, angle-90, color=TICK_COLOR))
+    ax.add_patch(Rectangle((x,y), -1 * width, -1 * height, angle-90, color=TICK_COLOR))
+
+    if temperature % temp_label_step == 0:
+        
+        radius = TEMP_WINDOW_INNER - TEMP_TICK_HEIGHT - t_label_inset
+        fontsize = t_font_size
+        x = (radius) * np.cos(theta)
+        y = (radius) * np.sin(theta)
+
+        # explicit sign, but not on 0: https://stackoverflow.com/a/2763589
+        label = '{0:{1}}'.format(temperature, '+' if temperature else '')
+        plt.text(x,y, typeset(label), color=TICK_COLOR, ha='center', va='center', size=fontsize)
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
