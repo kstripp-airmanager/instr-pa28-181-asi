@@ -27,6 +27,8 @@ WHITE_ARC_COLOR = '#FFFFFF'
 GREEN_ARC_COLOR = '#008000'
 YELLOW_ARC_COLOR = '#F9C806'
 REDLINE_COLOR = '#FF0000'
+LABEL_COLOR = '#FFFFFF'
+MODEL_TEXT_COLOR = '#00859F'
 
 # Speed Range
 V_min = 35
@@ -74,6 +76,49 @@ temp_label_step = 30 # label every 30 degrees
 t_font_size = 12
 t_label_inset = 15
 
+# Other labels
+labels = [
+    {
+        'text': "AIRSPEED",
+        'fontsize' : 14,
+        'color' : LABEL_COLOR,
+        'r': 70, # placement radius
+        't': 0,  # palcement angle
+        'rot': 0, # text rotation (optional)
+    },{
+        'text': "TEMP\n\u00B0C",
+        'fontsize' : 11,
+        'color' : LABEL_COLOR,
+        'r': 110,
+        't': 0,
+    },{
+        'text': "28-181",
+        'fontsize' : 10,
+        'color' : MODEL_TEXT_COLOR,
+        'r': 45,
+        't': 0,
+    },{
+        'text': "KNOTS",
+        'fontsize' : 11,
+        'color' : LABEL_COLOR,
+        'r': 50,
+        't': 180,
+    },{
+        'text': "T\nA\nS",
+        'fontsize' : 10,
+        'color' : LABEL_COLOR,
+        'r': TAS_WINDOW_INNER-20,
+        't': 122,
+        'rot':58,
+    },{
+        'text': "P\nALT",
+        'fontsize' : 11,
+        'color' : LABEL_COLOR,
+        'r': TEMP_WINDOW_INNER,
+        't': -25,
+        'rot':25,
+    }
+]
 #################################################
 # Fit functions
 
@@ -241,6 +286,18 @@ for temperature in np.arange(temp_min, (temp_max + temp_step), temp_step):
         # explicit sign, but not on 0: https://stackoverflow.com/a/2763589
         label = '{0:{1}}'.format(temperature, '+' if temperature else '')
         plt.text(x,y, typeset(label), color=TICK_COLOR, ha='center', va='center', size=fontsize)
+
+# Draw other labels
+for label in labels:
+    
+    theta = 2*np.pi * label['t']/360
+    x = (label['r']) * np.sin(theta)
+    y = (label['r']) * np.cos(theta)
+
+    plt.text(x,y, typeset(label['text']), color=label['color'],
+             ha='center', va='center',
+             rotation=label['rot'] if 'rot' in label.keys() else 0,
+             size=label['fontsize'])
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
