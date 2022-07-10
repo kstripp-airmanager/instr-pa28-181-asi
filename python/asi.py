@@ -84,7 +84,6 @@ labels = [
         'color' : LABEL_COLOR,
         'r': 70, # placement radius
         't': 0,  # palcement angle
-        'rot': 0, # text rotation (optional)
     },{
         'text': "TEMP\n\u00B0C",
         'fontsize' : 11,
@@ -105,18 +104,18 @@ labels = [
         't': 180,
     },{
         'text': "T\nA\nS",
-        'fontsize' : 10,
+        'fontsize' : 11,
         'color' : LABEL_COLOR,
         'r': TAS_WINDOW_INNER-20,
         't': 122,
-        'rot':58,
+        'kwargs': {"rotation":58, "linespacing":0.9},
     },{
         'text': "P\nALT",
         'fontsize' : 11,
         'color' : LABEL_COLOR,
         'r': TEMP_WINDOW_INNER,
         't': -25,
-        'rot':25,
+        'kwargs': {"rotation":25},
     }
 ]
 #################################################
@@ -293,11 +292,11 @@ for label in labels:
     theta = 2*np.pi * label['t']/360
     x = (label['r']) * np.sin(theta)
     y = (label['r']) * np.cos(theta)
+    kwargs = label['kwargs'] if 'kwargs' in label.keys() else {}
 
     plt.text(x,y, typeset(label['text']), color=label['color'],
              ha='center', va='center',
-             rotation=label['rot'] if 'rot' in label.keys() else 0,
-             size=label['fontsize'])
+             size=label['fontsize'], **kwargs)
 
 plt.savefig("guage_face.png", transparent=True)
 #plt.show()
