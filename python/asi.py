@@ -69,8 +69,8 @@ angles = [0, 30, 90, 180, 270, 330]
 temp_min = -30
 temp_max = 30
 temp_step = 10
-temp_angle_min = 17
-temp_angle_max = -17
+temp_angle_min = -17
+temp_angle_max = 17
 temp_label_step = 30 # label every 30 degrees
 
 t_font_size = 12
