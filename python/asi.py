@@ -18,7 +18,7 @@ TEMP_WINDOW_ANGLE = 40 # degrees, symmetric around vertical
 TAS_MIN_IAS = 84 # knots, min IAS covered by TAS window
 TAS_MAX_IAS = 125 # knots, max IAS covered by TAS window
 
-V_LABEL_INSET = 30 # px, inset distance inside tick marks
+V_LABEL_INSET = 25 # px, inset distance inside tick marks
 
 # Colors
 FACE_COLOR = '#131512'
@@ -49,7 +49,7 @@ TEMP_TICK_WIDTH = 3
 V_s0 = 49   # Stall, landing config.  Bottom of white arc
 V_s = 55    # Stall, clean config.  Bottom of green arc
 V_fe = 102  # Max flap extension speed.  Top of white arc
-V_no  = 125 # Masimum structural speed.  Green / yellow transition
+V_no = 125  # Masimum structural speed.  Green / yellow transition
 V_ne = 154  # Never exceed speed.  Red line / top of yello arc
 
 V_ARC_WIDTH = 9
@@ -63,7 +63,7 @@ v_font_small = 14 # pt
 # These are the best estimates from skewed photos
 # Note: Angles are measured clockwise from vertical
 speeds = [0, 40, 70, 105, 140, 170]
-angles = [0, 30, 90, 180, 270, 330]
+angles = [0, 30, 90, 180, 270, 325]
 
 # Temperature scale
 temp_min = -30
@@ -82,19 +82,19 @@ labels = [
         'text': "AIRSPEED",
         'fontsize' : 14,
         'color' : LABEL_COLOR,
-        'r': 70, # placement radius
+        'r': 58, # placement radius
         't': 0,  # palcement angle
     },{
         'text': "TEMP\n\u00B0C",
         'fontsize' : 11,
         'color' : LABEL_COLOR,
-        'r': 110,
+        'r': 95,
         't': 0,
     },{
         'text': "28-181",
         'fontsize' : 10,
         'color' : MODEL_TEXT_COLOR,
-        'r': 45,
+        'r': 38,
         't': 0,
     },{
         'text': "KNOTS",
@@ -114,7 +114,7 @@ labels = [
         'fontsize' : 11,
         'color' : LABEL_COLOR,
         'r': TEMP_WINDOW_INNER,
-        't': -25,
+        't': -27,
         'kwargs': {"rotation":25},
     }
 ]
