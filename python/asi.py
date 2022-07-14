@@ -5,6 +5,7 @@ from matplotlib.patches import Rectangle, Circle, Wedge
 from matplotlib.text import Text
 from matplotlib import rcParams
 import numpy as np
+import prettytable
 
 # Geometry
 BEZEL_WIDTH = 480 # px
@@ -62,8 +63,8 @@ v_font_small = 14 # pt
 # Known speed angles
 # These are the best estimates from skewed photos
 # Note: Angles are measured clockwise from vertical
-speeds = [0, 40, 70, 105, 140, 170]
-angles = [0, 30, 90, 180, 270, 325]
+speeds = [40, 50, 60, 70, 80,  90,  100, 105, 110, 120, 130, 140, 150, 160, 170]
+angles = [28, 43, 63, 86, 109, 137, 169, 184, 197, 222, 246, 270, 288, 306, 324]
 
 # Temperature scale
 temp_min = -30
@@ -107,14 +108,14 @@ labels = [
         'fontsize' : 11,
         'color' : LABEL_COLOR,
         'r': TAS_WINDOW_INNER-20,
-        't': 122,
+        't': 120,
         'kwargs': {"rotation":58, "linespacing":0.9},
     },{
         'text': "P\nALT",
         'fontsize' : 11,
         'color' : LABEL_COLOR,
         'r': TEMP_WINDOW_INNER,
-        't': -27,
+        't': -28,
         'kwargs': {"rotation":25},
     }
 ]
@@ -130,9 +131,19 @@ v_angle = lambda v: -1 * vfit(v) + 90
 speed_ticks = np.arange(V_min, V_max+5, 5)
 angles = v_angle(speed_ticks)
 
+# Display the fit function
+pt = prettytable.PrettyTable()
+
+pt.field_names = ["Airspeed", "Fit Angle"]
+
+for speed in range(40, 180, 10):
+    pt.add_row([speed, int(90 - v_angle(speed))])
+
+print(pt)
+
 # Plot the fit function
 plt.plot(ref_speeds, ref_angles, label="reference")
-plt.plot(speed_ticks, angles - 90, label="fit")
+plt.plot(speed_ticks, 90 - angles, label="fit")
 plt.legend()
 plt.title("Airspeed polyfit")
 plt.xlabel("Speed")
