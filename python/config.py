@@ -55,8 +55,8 @@ v_font_small = 14 # pt
 # Known speed angles
 # These are the best estimates from skewed photos
 # Note: Angles are measured clockwise from vertical
-speeds = [40, 50, 60, 70, 80,  90,  100, 105, 110, 120, 130, 140, 150, 160, 170]
-angles = [28, 43, 63, 86, 109, 137, 169, 184, 197, 222, 246, 270, 288, 306, 324]
+SPEEDS = [40, 50, 60, 70, 80,  90,  100, 105, 110, 120, 130, 140, 150, 160, 170]
+ANGLES = [28, 43, 63, 86, 109, 137, 169, 184, 197, 222, 246, 270, 288, 306, 324]
 
 # Temperature scale
 temp_min = -30
