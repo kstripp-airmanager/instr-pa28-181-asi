@@ -32,10 +32,6 @@ MODEL_TEXT_COLOR = '#00859F'
 CARD_COLOR = '#E6E6E6'
 CARD_MARK_COLOR = '#050505'
 
-# Speed Range
-V_min = 35
-V_max = 170
-
 # Tick geometry
 MAJ_TICK_WIDTH = 6
 MAJ_TICK_HEIGHT = 60
@@ -46,6 +42,16 @@ MIN_TICK_HEIGHT = 30
 
 TEMP_TICK_HEIGHT = 15
 TEMP_TICK_WIDTH = 3
+
+ALT_MAJ_HEIGHT = 50
+ALT_MAJ_WIDTH = 1
+ALT_MIN_HEIGHT = 10
+ALT_MIN_WIDTH = 0.5
+ALT_LABEL_OFFSET = 25
+
+# Speed Range
+V_min = 35
+V_max = 170
 
 # V-speeds
 V_s0 = 49   # Stall, landing config.  Bottom of white arc
@@ -71,6 +77,12 @@ temp_label_step = 30 # label every 30 degrees
 
 t_font_size = 12
 t_label_inset = 15
+
+# Altitude scale
+alt_min = -2000
+alt_max = 18000
+alt_step = 500
+alt_font = 8
 
 # Other labels
 labels = [

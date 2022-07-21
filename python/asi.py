@@ -10,7 +10,7 @@ import prettytable
 from config import *
 
 #####################################################################
-def compute_ias_fit():
+def compute_ias_fit(display=False):
 
     ias_ref = np.loadtxt(IAS_REF, delimiter=',', skiprows=1)
 
@@ -21,14 +21,15 @@ def compute_ias_fit():
     angles = v_angle(speed_ticks)
 
     # Display the fit function
-    pt = prettytable.PrettyTable()
+    if display:
+        pt = prettytable.PrettyTable()
 
-    pt.field_names = ["Airspeed", "Fit Angle"]
+        pt.field_names = ["Airspeed", "Fit Angle"]
 
-    for speed in range(40, 180, 10):
-        pt.add_row([speed, int(90 - v_angle(speed))])
+        for speed in range(40, 180, 10):
+            pt.add_row([speed, int(90 - v_angle(speed))])
 
-    print(pt)
+        print(pt)
 
     # Plot the fit function
     plt.figure()
@@ -51,6 +52,29 @@ def compute_ias_fit():
 
 
     return v_angle
+
+#####################################################################
+def compute_alt_fit(display=False):
+    """ Compute fit function for pressure altitude angles"""
+
+    alt_ref = np.loadtxt(ALT_REF, delimiter=',', skiprows=1)
+    
+    # Pressure altitude tick fit
+    vfit = np.poly1d(np.polyfit(alt_ref[:,0], alt_ref[:,1], 1))
+    alt_angle = lambda v: -1 * vfit(v) + 90
+
+    # Display the fit function
+    if display:
+        pt = prettytable.PrettyTable()
+
+        pt.field_names = ["Altitude", "Fit Angle"]
+
+        for alt in range(-2000, 12000, 1000):
+            pt.add_row([alt, int(90 - alt_angle(alt))])
+
+        print(pt)
+
+    return alt_angle
 
 #####################################################################
 def compute_temp_fit():
@@ -226,6 +250,8 @@ def draw_face():
 def draw_card():
     
     alt_angle = compute_alt_fit(display=True)
+    alt_ticks = np.arange(alt_min, alt_max+alt_step, alt_step)
+    alt_angles = alt_angle(alt_ticks)
 
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
     px = 1/plt.rcParams['figure.dpi']
@@ -246,6 +272,28 @@ def draw_card():
     # Draw card background
     radius = WINDOW_OUTER
     ax.add_patch(Circle((0,0), radius=radius, color=CARD_COLOR))
+    
+    # Draw altitude ticks
+    for idx, angle in enumerate(alt_angles):
+        theta = 2*np.pi * angle/360
+
+        # Tick width based on major or minor
+        width = ALT_MAJ_WIDTH/2 if alt_ticks[idx] % 1000 == 0 else ALT_MIN_WIDTH/2
+        height = ALT_MAJ_HEIGHT if alt_ticks[idx] % 1000 == 0 else ALT_MIN_HEIGHT
+
+        # Height and location varies around TAS window
+        x = (TEMP_WINDOW_INNER) * np.cos(theta)
+        y = (TEMP_WINDOW_INNER) * np.sin(theta)
+
+        ax.add_patch(Rectangle((x,y),  1 * width, height, angle-90, color=CARD_MARK_COLOR))
+        if alt_ticks[idx] % 2000 == 0:
+            x = (TEMP_WINDOW_INNER+ ALT_LABEL_OFFSET) * np.cos(theta)
+            y = (TEMP_WINDOW_INNER+ ALT_LABEL_OFFSET) * np.sin(theta)
+            label = int(alt_ticks[idx]/1000)
+            plt.text(x,y, typeset(label), color=CARD_MARK_COLOR,
+                     rotation = angle-90,
+                     backgroundcolor = CARD_COLOR,
+                     ha='center', va='center', size=alt_font)
 
     plt.savefig("guage_card.png", transparent=True)
 
