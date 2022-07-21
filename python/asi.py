@@ -312,7 +312,9 @@ def draw_card():
         x = (TEMP_WINDOW_INNER) * np.cos(theta)
         y = (TEMP_WINDOW_INNER) * np.sin(theta)
 
-        ax.add_patch(Rectangle((x,y),  1 * width, height, angle-90, color=CARD_MARK_COLOR))
+        ax.add_patch(Rectangle((x,y),  0.5 * width, height, angle-90, color=CARD_MARK_COLOR))
+        ax.add_patch(Rectangle((x,y), -0.5 * width, height, angle-90, color=CARD_MARK_COLOR))
+        
         if alt_ticks[idx] % 2000 == 0:
             x = (TEMP_WINDOW_INNER+ ALT_LABEL_OFFSET) * np.cos(theta)
             y = (TEMP_WINDOW_INNER+ ALT_LABEL_OFFSET) * np.sin(theta)
@@ -333,7 +335,8 @@ def draw_card():
         # Height and location varies around TAS window
         x = (TAS_WINDOW_INNER) * np.cos(theta)
         y = (TAS_WINDOW_INNER) * np.sin(theta)
-        ax.add_patch(Rectangle((x,y),  1 * width, height, angle-90, color=CARD_MARK_COLOR))
+        ax.add_patch(Rectangle((x,y),  0.5 * width, height, angle-90, color=CARD_MARK_COLOR))
+        ax.add_patch(Rectangle((x,y), -0.5 * width, height, angle-90, color=CARD_MARK_COLOR))
 
         if tas_ticks[idx] % 10 == 0:
             x = (TAS_WINDOW_INNER+ TAS_LABEL_OFFSET) * np.cos(theta)
