@@ -54,6 +54,29 @@ def compute_ias_fit(display=False):
     return v_angle
 
 #####################################################################
+def compute_tas_fit(display=False):
+    """ Compute fit function for true airspeed angles"""
+
+    tas_ref = np.loadtxt(TAS_REF, delimiter=',', skiprows=1)
+    
+    # Pressure altitude tick fit
+    vfit = np.poly1d(np.polyfit(tas_ref[:,0], tas_ref[:,1], 1))
+    tas_angle = lambda v: -1 * vfit(v) + 90
+
+    # Display the fit function
+    if display:
+        pt = prettytable.PrettyTable()
+
+        pt.field_names = ["True Airspeed", "Fit Angle"]
+
+        for tas in range(70, 160, 10):
+            pt.add_row([tas, int(90 - tas_angle(tas))])
+
+        print(pt)
+
+    return tas_angle
+
+#####################################################################
 def compute_alt_fit(display=False):
     """ Compute fit function for pressure altitude angles"""
 
@@ -252,6 +275,10 @@ def draw_card():
     alt_angle = compute_alt_fit(display=True)
     alt_ticks = np.arange(alt_min, alt_max+alt_step, alt_step)
     alt_angles = alt_angle(alt_ticks)
+    
+    tas_angle = compute_tas_fit(display=True)
+    tas_ticks = np.arange(tas_min, tas_max+tas_step, tas_step)
+    tas_angles = tas_angle(tas_ticks)
 
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
     px = 1/plt.rcParams['figure.dpi']
@@ -294,6 +321,28 @@ def draw_card():
                      rotation = angle-90,
                      backgroundcolor = CARD_COLOR,
                      ha='center', va='center', size=alt_font)
+
+    # Draw TAS ticks
+    for idx, angle in enumerate(tas_angles):
+        theta = 2*np.pi * angle/360
+
+        # Tick width based on major or minor
+        width = TAS_MAJ_WIDTH/2 if alt_ticks[idx] % 1000 == 0 else TAS_MIN_WIDTH/2
+        height = TAS_MAJ_HEIGHT if alt_ticks[idx] % 1000 == 0 else TAS_MIN_HEIGHT
+
+        # Height and location varies around TAS window
+        x = (TAS_WINDOW_INNER) * np.cos(theta)
+        y = (TAS_WINDOW_INNER) * np.sin(theta)
+        ax.add_patch(Rectangle((x,y),  1 * width, height, angle-90, color=CARD_MARK_COLOR))
+
+        if tas_ticks[idx] % 10 == 0:
+            x = (TAS_WINDOW_INNER+ TAS_LABEL_OFFSET) * np.cos(theta)
+            y = (TAS_WINDOW_INNER+ TAS_LABEL_OFFSET) * np.sin(theta)
+            label = int(tas_ticks[idx])
+            plt.text(x,y, typeset(label), color=CARD_MARK_COLOR,
+                     rotation = angle+90,
+                     backgroundcolor = CARD_COLOR,
+                     ha='center', va='center', size=tas_font)
 
     plt.savefig("guage_card.png", transparent=True)
 
