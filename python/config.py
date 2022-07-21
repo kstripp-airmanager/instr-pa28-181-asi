@@ -35,7 +35,7 @@ CARD_MARK_COLOR = '#050505'
 # Tick geometry
 MAJ_TICK_WIDTH = 6
 MAJ_TICK_HEIGHT = 60
-TAS_TICK_HEIGHT = 23
+TAS_TICK_HEIGHT = 23 # IAS tick near TAS window
 
 MIN_TICK_WIDTH = 3
 MIN_TICK_HEIGHT = 30
@@ -48,6 +48,12 @@ ALT_MAJ_WIDTH = 1
 ALT_MIN_HEIGHT = 10
 ALT_MIN_WIDTH = 0.5
 ALT_LABEL_OFFSET = 25
+
+TAS_MAJ_HEIGHT = 10 # TAS ticks on card
+TAS_MAJ_WIDTH = 1
+TAS_MIN_HEIGHT = 10
+TAS_MIN_WIDTH = 0.5
+TAS_LABEL_OFFSET = 25
 
 # Speed Range
 V_min = 35
@@ -78,11 +84,17 @@ temp_label_step = 30 # label every 30 degrees
 t_font_size = 12
 t_label_inset = 15
 
-# Altitude scale
+# Altitude card scale
 alt_min = -2000
 alt_max = 18000
 alt_step = 500
 alt_font = 8
+
+# True Airspeed card scale
+tas_min = 70
+tas_max = 150
+tas_step = 5
+tas_font = 13
 
 # Other labels
 labels = [
