@@ -12,10 +12,9 @@ from config import *
 #####################################################################
 def compute_ias_fit():
 
-    ref_speeds = np.array(SPEEDS)
-    ref_angles = np.array(ANGLES)
+    ias_ref = np.loadtxt(IAS_REF, delimiter=',', skiprows=1)
 
-    vfit = np.poly1d(np.polyfit(SPEEDS, ANGLES, 3))
+    vfit = np.poly1d(np.polyfit(ias_ref[:,0], ias_ref[:,1], 3))
     v_angle = lambda v: -1 * vfit(v) + 90
 
     speed_ticks = np.arange(V_min, V_max+5, 5)
@@ -33,7 +32,7 @@ def compute_ias_fit():
 
     # Plot the fit function
     plt.figure()
-    plt.plot(ref_speeds, ref_angles, label="reference")
+    plt.plot(ias_ref[:,0], ias_ref[:,1], label="reference")
     plt.plot(speed_ticks, 90 - angles, label="fit")
     plt.legend()
     plt.title("Airspeed polyfit")

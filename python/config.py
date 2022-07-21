@@ -1,3 +1,8 @@
+# Reference files
+# Note: Angles are measured clockwise from vertical
+IAS_REF = "ias_reference.csv"
+TAS_REF = "tas_reference.csv"
+ALT_REF = "alt_reference.csv"
 
 # Geometry
 BEZEL_WIDTH = 480 # px
@@ -51,12 +56,6 @@ V_ARC_WIDTH = 9
 v_labels = [40, 60, 80, 100, 120, 140, 160]
 v_font_large = 20 # pt
 v_font_small = 14 # pt
-
-# Known speed angles
-# These are the best estimates from skewed photos
-# Note: Angles are measured clockwise from vertical
-SPEEDS = [40, 50, 60, 70, 80,  90,  100, 105, 110, 120, 130, 140, 150, 160, 170]
-ANGLES = [28, 43, 63, 86, 109, 137, 169, 184, 197, 222, 246, 270, 288, 306, 324]
 
 # Temperature scale
 temp_min = -30
