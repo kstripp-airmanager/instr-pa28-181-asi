@@ -69,7 +69,7 @@ def draw_face():
 
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
     px = 1/plt.rcParams['figure.dpi']
-    fix, ax = plt.subplots(figsize=(560*px, 560*px))
+    fix, ax = plt.subplots(figsize=(GAUGE_WIDTH*px, GAUGE_WIDTH*px))
 
     # Set up general figure properties
     x = (FACE_DIAM/2-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
@@ -223,5 +223,33 @@ def draw_face():
     #plt.show()
 
 #####################################################################
+def draw_card():
+    
+    alt_angle = compute_alt_fit(display=True)
+
+    # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
+    px = 1/plt.rcParams['figure.dpi']
+    fix, ax = plt.subplots(figsize=(GAUGE_WIDTH*px, GAUGE_WIDTH*px))
+
+    # Set up general figure properties
+    x = (WINDOW_OUTER-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
+    y = (WINDOW_OUTER-1) * np.cos(2*np.pi* np.array([0, 90, 180, 270])/360)
+    ax.plot(x, y, '.', color=CARD_COLOR)
+    ax.axis("Off")
+    plt.gca().set_aspect('equal')
+
+    rcParams['font.family'] = 'Alte DIN 1451 Mittelschrift'
+
+    # The DIN 1451 font is close, but the I glyph matches the 1 glyph seen on the actual gauge
+    typeset = lambda s: str(s).replace("1", "I")
+
+    # Draw card background
+    radius = WINDOW_OUTER
+    ax.add_patch(Circle((0,0), radius=radius, color=CARD_COLOR))
+
+    plt.savefig("guage_card.png", transparent=True)
+
+#####################################################################
 if __name__ == "__main__":
     draw_face()
+    draw_card()

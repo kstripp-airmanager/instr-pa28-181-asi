@@ -5,6 +5,7 @@ TAS_REF = "tas_reference.csv"
 ALT_REF = "alt_reference.csv"
 
 # Geometry
+GAUGE_WIDTH = 560 # px, total gauge image size used for Air Manager
 BEZEL_WIDTH = 480 # px
 FACE_DIAM = 470   # px, outer diameter of the face image
 FACE_WIDTH = 396  # px
@@ -27,6 +28,9 @@ YELLOW_ARC_COLOR = '#F9C806'
 REDLINE_COLOR = '#FF0000'
 LABEL_COLOR = '#FFFFFF'
 MODEL_TEXT_COLOR = '#00859F'
+
+CARD_COLOR = '#E6E6E6'
+CARD_MARK_COLOR = '#050505'
 
 # Speed Range
 V_min = 35
