@@ -38,8 +38,17 @@ def compute_ias_fit():
     plt.title("Airspeed polyfit")
     plt.xlabel("Speed")
     plt.ylabel("Indicator angle (\u00B0)")
+    plt.savefig("ias_fit.png")
 
-    plt.savefig("fit_function.png")
+    plt.figure()
+    plt.plot(ias_ref[1:,0], np.diff(ias_ref[:,1]), label="reference")
+    plt.plot(speed_ticks[1:], np.diff(90 - angles), label="fit")
+    plt.legend()
+    plt.title("Airspeed fit derivative")
+    plt.xlabel("Speed Step")
+    plt.ylabel("Relative angle (\u00B0)")
+    plt.savefig("ias_fit_diff.png")
+
 
     return v_angle
 
