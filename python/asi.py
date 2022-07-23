@@ -266,7 +266,7 @@ def draw_face():
                  ha='center', va='center',
                  size=label['fontsize'], **kwargs)
 
-    plt.savefig(f"../{instrument_id}/resources/guage_face.png", transparent=True)
+    plt.savefig(f"../{instrument_id}/resources/gauge_face.png", transparent=True)
     #plt.show()
 
 #####################################################################
@@ -347,7 +347,7 @@ def draw_card():
                      backgroundcolor = CARD_COLOR,
                      ha='center', va='center', size=tas_font)
 
-    plt.savefig(f"../{instrument_id}/resources/guage_card.png", transparent=True)
+    plt.savefig(f"../{instrument_id}/resources/gauge_card.png", transparent=True)
 
 #####################################################################
 if __name__ == "__main__":
