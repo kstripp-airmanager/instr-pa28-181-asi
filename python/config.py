@@ -4,6 +4,9 @@ IAS_REF = "ias_reference.csv"
 TAS_REF = "tas_reference.csv"
 ALT_REF = "alt_reference.csv"
 
+# Instrument ID
+instrument_id = "af0fcd2a-a0ae-454f-a97f-aa228736acaf"
+
 # Geometry
 GAUGE_WIDTH = 560 # px, total gauge image size used for Air Manager
 BEZEL_WIDTH = 480 # px
