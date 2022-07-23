@@ -124,6 +124,7 @@ def draw_face():
     ax.plot(x, y, '.', color=FACE_COLOR)
     ax.axis("Off")
     plt.gca().set_aspect('equal')
+    plt.axis([-0.5 * GAUGE_WIDTH, 0.5 * GAUGE_WIDTH, -0.5 * GAUGE_WIDTH, 0.5 * GAUGE_WIDTH])
 
     rcParams['font.family'] = 'Alte DIN 1451 Mittelschrift'
 
@@ -290,6 +291,7 @@ def draw_card():
     ax.plot(x, y, '.', color=CARD_COLOR)
     ax.axis("Off")
     plt.gca().set_aspect('equal')
+    plt.axis([-0.5 * GAUGE_WIDTH, 0.5 * GAUGE_WIDTH, -0.5 * GAUGE_WIDTH, 0.5 * GAUGE_WIDTH])
 
     rcParams['font.family'] = 'Alte DIN 1451 Mittelschrift'
 
