@@ -13,7 +13,7 @@ else
 	img_add_fullscreen("bezel.png")
 end	
 
-img_add("airknobshadow.png",31,400,85,85)
+img_add("airknobshadow.png",396,400,85,85)
 
 local card = 0
 
@@ -42,12 +42,12 @@ end
 
 function knob_callback(value)
     card = card + value
-    card = var_cap(card, -90, 25)
+    card = var_cap(card, -60, 45)
     rotate(as_card, card)
 end
 
 -- DIALS ADD --
-dial_knob = dial_add("airknob.png", 31, 395, 85, 85, knob_callback)
+dial_knob = dial_add("airknob.png", 396, 395, 85, 85, knob_callback)
 dial_click_rotate(dial_knob,6)
 
 function knob_left()
