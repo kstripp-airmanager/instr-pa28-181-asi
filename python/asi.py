@@ -117,6 +117,7 @@ def draw_face():
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
     px = 1/plt.rcParams['figure.dpi']
     fix, ax = plt.subplots(figsize=(GAUGE_WIDTH*px, GAUGE_WIDTH*px))
+    plt.subplots_adjust(left=0.0, right=1.0, top=1.0, bottom=0.0)
 
     # Set up general figure properties
     x = (FACE_DIAM/2-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
@@ -268,7 +269,6 @@ def draw_face():
                  size=label['fontsize'], **kwargs)
 
     plt.savefig(f"../{instrument_id}/resources/gauge_face.png", transparent=True)
-    #plt.show()
 
 #####################################################################
 def draw_card():
@@ -283,7 +283,8 @@ def draw_card():
 
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html
     px = 1/plt.rcParams['figure.dpi']
-    fix, ax = plt.subplots(figsize=(GAUGE_WIDTH*px, GAUGE_WIDTH*px))
+    fig, ax = plt.subplots(figsize=(GAUGE_WIDTH*px, GAUGE_WIDTH*px))
+    plt.subplots_adjust(left=0.0, right=1.0, top=1.0, bottom=0.0)
 
     # Set up general figure properties
     x = (WINDOW_OUTER-1) * np.sin(2*np.pi* np.array([0, 90, 180, 270])/360)
