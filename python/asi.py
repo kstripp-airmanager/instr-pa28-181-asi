@@ -26,7 +26,7 @@ def compute_ias_fit(display=False):
 
         pt.field_names = ["Airspeed", "Fit Angle"]
 
-        for speed in range(40, 180, 10):
+        for speed in range(20, 190, 10):
             pt.add_row([speed, int(90 - v_angle(speed))])
 
         print(pt)
@@ -108,7 +108,7 @@ def compute_temp_fit():
 #####################################################################
 def draw_face():
 
-    v_angle = compute_ias_fit()
+    v_angle = compute_ias_fit(display=True)
     temp_angle = compute_temp_fit()
     
     speed_ticks = np.arange(V_min, V_max+5, 5)
