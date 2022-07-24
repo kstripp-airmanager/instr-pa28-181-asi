@@ -8,13 +8,13 @@ ALT_REF = "alt_reference.csv"
 instrument_id = "af0fcd2a-a0ae-454f-a97f-aa228736acaf"
 
 # Geometry
-GAUGE_WIDTH = 560 # px, total gauge image size used for Air Manager
+GAUGE_WIDTH = 512 # px, total gauge image size used for Air Manager
 BEZEL_WIDTH = 480 # px
-FACE_DIAM = 470   # px, outer diameter of the face image
-FACE_WIDTH = 396  # px
-WINDOW_OUTER = 210 # px, outer radius of windows
-TEMP_WINDOW_INNER = 162 # px, inner radius of temperature window
-TAS_WINDOW_INNER = 162 # px, inner radius of TAS window
+FACE_DIAM = 465   # px, outer diameter of the face image
+FACE_WIDTH = 380  # px
+WINDOW_OUTER = 200 # px, outer radius of windows
+TEMP_WINDOW_INNER = 155 # px, inner radius of temperature window
+TAS_WINDOW_INNER = 158 # px, inner radius of TAS window
 
 TEMP_WINDOW_ANGLE = 36 # degrees, symmetric around vertical
 TAS_MIN_IAS = 84 # knots, min IAS covered by TAS window
@@ -50,7 +50,7 @@ ALT_MAJ_HEIGHT = 50
 ALT_MAJ_WIDTH = 1
 ALT_MIN_HEIGHT = 10
 ALT_MIN_WIDTH = 0.5
-ALT_LABEL_OFFSET = 25
+ALT_LABEL_OFFSET = 20
 
 TAS_MAJ_HEIGHT = 10 # TAS ticks on card
 TAS_MAJ_WIDTH = 1
