@@ -1,6 +1,6 @@
 # Piper PA28-181 Arrow II Airspeed Indicator
 
-!(preview.png)
+<img src=af0fcd2a-a0ae-454f-a97f-aa228736acaf/preview.png width=200>
 
 This is an airspeed gauge for the Piper PA28-181 Archer II for use with Air Manager.
 
